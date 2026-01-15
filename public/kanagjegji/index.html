@@ -4,10 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="refresh" content="0;url=./invitation-kanagjegji.pdf">
     <title>Kanagjegji • Ftesa</title>
-  </head>
-  <body>
     <script>
-      window.location.replace('./invitation-kanagjegji.pdf');
+      (function() {
+        const path = window.location.pathname;
+        const last = path.split('/').pop() || '';
+        if (!path.endsWith('/') && !last.includes('.')) {
+          window.location.replace(path + '/');
+        } else {
+          window.location.replace('./invitation-kanagjegji.pdf');
+        }
+      })();
     </script>
-  </body>
+  </head>
+  <body></body>
 </html>
