@@ -15,52 +15,27 @@
 
     <title>Nafie &amp; Visar • Ftesa</title>
     <link rel="stylesheet" href="../styles.css" />
-
-    <script>
-      /*
-        Production-safe relative assets on static hosting (Vercel, etc.)
-
-        Why images "sometimes" break:
-        - If someone visits /nafie-visar (NO trailing slash), some hosts can serve index.html
-          but the browser treats the base URL as a "file" path. Then:
-            "invitation.png" resolves to "/invitation.png" (WRONG)
-          instead of:
-            "/nafie-visar/invitation.png" (CORRECT)
-
-        Fix:
-        - Redirect to the trailing-slash URL so same-folder relative paths always resolve.
-      */
-      (function () {
-        const path = window.location.pathname;
-        const last = path.split("/").pop() || "";
-
-        // Only redirect "folder" routes like /nafie-visar (no file extension).
-        if (!path.endsWith("/") && !last.includes(".")) {
-          window.location.replace(path + "/" + window.location.search + window.location.hash);
-        }
-      })();
-    </script>
   </head>
   <body>
     <div class="page">
-      <main class="container" role="main">
+      <main class="container container--invite" role="main">
         <!--
-          This image lives in the SAME folder as this index.html file:
-            public/nafie-visar/index.html
-            public/nafie-visar/invitation.png
-
-          Using "./invitation.png" guarantees it is resolved relative to THIS folder
-          (after the trailing-slash redirect above), so it works in production on Vercel.
+          Inline PDF rendering:
+          - Using an <iframe> relies on the browser's native PDF viewer, which preserves
+            interactive link annotations embedded in the PDF (Google Maps, WhatsApp, etc.).
+          - The absolute path avoids any trailing-slash base-URL edge cases on static hosting.
         -->
-        <img
-          class="inviteImage"
-          src="./invitation.png"
-          alt="Wedding invitation for Nafie and Visar"
+        <iframe
+          class="invitePdf"
+          src="/nafie-visar/invitation.pdf"
+          title="Wedding invitation for Nafie and Visar"
           loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
-        <div class="hint">Scroll to view the full invitation.</div>
+        ></iframe>
+
+        <p class="hint">
+          Scroll inside the invitation to view all pages. If it doesn’t display,
+          <a href="/nafie-visar/invitation.pdf">open the PDF here</a>.
+        </p>
       </main>
     </div>
   </body>

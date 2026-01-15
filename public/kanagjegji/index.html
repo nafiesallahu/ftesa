@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index,follow" />
+    <meta name="description" content="Wedding invitation page (static)." />
+
+    <title>Kanagjegji • Ftesa</title>
+    <link rel="stylesheet" href="../styles.css" />
+
+    <script>
+      /*
+        Keep same-folder relative assets reliable on static hosting.
+        Required here because the PDF must be referenced as "./invitation-kanagjegji.pdf".
+      */
+      (function () {
+        const path = window.location.pathname;
+        const last = path.split("/").pop() || "";
+        if (!path.endsWith("/") && !last.includes(".")) window.location.replace(path + "/");
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="page">
+      <main class="container container--invite" role="main">
+        <!--
+          Place the PDF here (same folder as this file):
+            public/kanagjegji/invitation-kanagjegji.pdf
+        -->
+        <iframe
+          class="invitePdf"
+          src="./invitation-kanagjegji.pdf"
+          title="Kanagjegji invitation"
+          loading="eager"
+        ></iframe>
+
+        <p class="hint">
+          Scroll inside the invitation to view all pages. If it doesn’t display,
+          <a href="./invitation-kanagjegji.pdf">open the PDF here</a>.
+        </p>
+      </main>
+    </div>
+  </body>
+</html>
+

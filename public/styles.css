@@ -13,6 +13,8 @@
   --radius: 14px;
   /* Desktop-friendly max width while staying full-width on mobile. */
   --maxWidth: 980px;
+  /* Invitation pages are designed to be readable on desktop. */
+  --inviteMaxWidth: 420px;
   --gutter: 14px;
 }
 
@@ -60,6 +62,15 @@ body {
   max-width: var(--maxWidth);
 }
 
+.container--invite {
+  /*
+    For invitation pages:
+    - Full width on mobile (container is still width: 100%)
+    - Centered, readable width on desktop
+  */
+  max-width: var(--inviteMaxWidth);
+}
+
 .inviteImage {
   /*
     Full-width scaling without distortion:
@@ -69,6 +80,22 @@ body {
   width: 100%;
   height: auto; /* keep aspect ratio */
   display: block;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.invitePdf {
+  /*
+    The browser's native PDF viewer preserves link annotations inside the PDF
+    (Google Maps, WhatsApp, etc.). Rendering as an image/canvas would lose them.
+  */
+  width: 100%;
+  /* Use dynamic viewport height when available; fall back to classic vh. */
+  height: 100dvh;
+  min-height: 100vh;
+  display: block;
+  border: 0;
   background: var(--card);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
