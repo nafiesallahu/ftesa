@@ -1,19 +1,82 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <!--
-      Redirect directly to the PDF so iPhone Safari opens it in the native full-screen viewer.
-      Use a root-relative path so this works for BOTH:
-        - /nafie-visar
-        - /nafie-visar/
-    -->
-    <meta http-equiv="refresh" content="0;url=/nafie-visar/invitation.pdf">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="description" content="Wedding invitation page (static)." />
+
     <title>Nafie &amp; Visar • Ftesa</title>
+
+    <style>
+      /* Full-viewport PDF viewer (mobile-first). */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #0b0f17; /* neutral dark background behind PDF */
+      }
+
+      .viewer {
+        width: 100%;
+        height: 100vh; /* fallback */
+        height: 100dvh; /* modern mobile viewport */
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+        background: #fff; /* in case PDF area renders transparent */
+      }
+    </style>
+
+    <script>
+      // Ensure `/nafie-visar` becomes `/nafie-visar/` so `./invitation.pdf` resolves correctly.
+      (function () {
+        const path = window.location.pathname;
+        const last = path.split("/").pop() || "";
+        if (!path.endsWith("/") && !last.includes(".")) {
+          window.location.replace(path + "/");
+        }
+      })();
+    </script>
   </head>
   <body>
+    <div class="viewer" role="main" aria-label="Wedding invitation PDF viewer">
+      <!--
+        NOTE:
+        - This relies on the browser's native PDF viewer. iOS Safari may still be inconsistent
+          with PDF annotation taps in embeds, but this setup maximizes viewport usage.
+      -->
+      <iframe
+        id="pdfFrame"
+        src="./invitation.pdf"
+        title="Wedding invitation PDF for Nafie and Visar"
+        loading="eager"
+      ></iframe>
+    </div>
+
     <script>
-      window.location.replace('/nafie-visar/invitation.pdf');
+      // iOS Safari sizing fix: ensure the iframe matches the visible viewport height.
+      (function () {
+        const frame = document.getElementById("pdfFrame");
+        if (!frame) return;
+
+        function syncHeight() {
+          // Use innerHeight to avoid "half screen" issues during orientation / UI chrome changes.
+          frame.style.height = window.innerHeight + "px";
+        }
+
+        window.addEventListener("load", syncHeight, { passive: true });
+        window.addEventListener("resize", syncHeight, { passive: true });
+        window.addEventListener("orientationchange", syncHeight, { passive: true });
+        syncHeight();
+      })();
     </script>
   </body>
 </html>
