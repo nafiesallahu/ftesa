@@ -2,19 +2,13 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="refresh" content="0;url=./invitation-kanagjegji.pdf">
     <title>Kanagjegji • Ftesa</title>
-    <script>
-      (function() {
-        const path = window.location.pathname;
-        const last = path.split('/').pop() || '';
-        if (!path.endsWith('/') && !last.includes('.')) {
-          window.location.replace(path + '/');
-        } else {
-          window.location.replace('./invitation-kanagjegji.pdf');
-        }
-      })();
-    </script>
   </head>
-  <body></body>
+  <body>
+    <script>
+      window.location.replace('./invitation-kanagjegji.pdf');
+    </script>
+  </body>
 </html>
