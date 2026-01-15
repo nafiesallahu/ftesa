@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index,follow" />
+    <meta
+      name="description"
+      content="Wedding invitation page (static)."
+    />
+
+    <!-- Open Graph (basic) -->
+    <meta property="og:site_name" content="Ftesa" />
+    <meta property="og:type" content="website" />
+
+    <title>Nafie &amp; Visar • Ftesa</title>
+    <link rel="stylesheet" href="../styles.css" />
+
+    <script>
+      /*
+        Invitation config for THIS folder only.
+
+        To add a new invitation:
+        - Copy this folder to /public/<new-slug>/
+        - Replace invitation.png (or change imageSrc)
+        - Update title + imageAlt below
+      */
+      window.__FTESA_INVITATION__ = {
+        title: "Nafie & Visar",
+        imageSrc: "invitation.png",
+        imageAlt: "Wedding invitation for Nafie and Visar",
+      };
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- No-JS fallback: still show the image -->
+      <div class="page">
+        <main class="container" role="main">
+          <img
+            class="inviteImage"
+            src="invitation.png"
+            alt="Wedding invitation for Nafie and Visar"
+          />
+          <div class="hint">Scroll to view the full invitation.</div>
+        </main>
+      </div>
+    </div>
+    <script src="../script.js"></script>
+  </body>
+</html>
+

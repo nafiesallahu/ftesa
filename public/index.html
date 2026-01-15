@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Ftesa — simple, static wedding invitation pages."
+    />
+    <meta name="robots" content="index,follow" />
+
+    <!-- Open Graph (basic) -->
+    <meta property="og:site_name" content="Ftesa" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Ftesa" />
+    <meta
+      property="og:description"
+      content="Simple, static wedding invitation pages."
+    />
+
+    <title>Ftesa</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <main class="container" role="main">
+        <h1 style="margin: 0 0 6px">Ftesa</h1>
+        <p style="margin: 0; opacity: 0.75">
+          Static wedding invitations. Each invitation lives in its own folder so
+          shared hosting works without server-side routing.
+        </p>
+
+        <ul class="homeList" aria-label="Sample invitations">
+          <li>
+            <a class="homeLink" href="./nafie-visar/">/nafie-visar</a>
+          </li>
+          <li>
+            <a class="homeLink" href="./client-name/">/client-name</a>
+          </li>
+        </ul>
+
+        <p class="hint" style="margin-top: 14px">
+          To add a new invite: copy a folder under <code>/public</code>, replace
+          <code>invitation.png</code>, and edit the small config block in that
+          folder’s <code>index.html</code>.
+        </p>
+      </main>
+    </div>
+  </body>
+</html>
+

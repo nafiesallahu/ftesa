@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta
+      name="description"
+      content="Template invitation page — copy this folder for new clients."
+    />
+
+    <meta property="og:site_name" content="Ftesa" />
+    <meta property="og:type" content="website" />
+
+    <title>Client Name • Ftesa</title>
+    <link rel="stylesheet" href="../styles.css" />
+
+    <script>
+      /*
+        TEMPLATE: copy this folder to create a new invitation
+
+        Example:
+        - Create: /public/nafie-visar/
+        - Put:    /public/nafie-visar/invitation.png
+        - Edit:   title + alt text below
+        - Visit:  https://yourdomain.com/nafie-visar/
+      */
+      window.__FTESA_INVITATION__ = {
+        title: "Client Name",
+        imageSrc: "invitation.png", // can be .jpg too
+        imageAlt: "Wedding invitation for Client Name",
+      };
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="page">
+        <main class="container" role="main">
+          <img
+            class="inviteImage"
+            src="invitation.png"
+            alt="Wedding invitation for Client Name"
+          />
+          <div class="hint">Scroll to view the full invitation.</div>
+        </main>
+      </div>
+    </div>
+    <script src="../script.js"></script>
+  </body>
+</html>
+
