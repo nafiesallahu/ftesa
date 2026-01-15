@@ -2,12 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0;url=./invitation.pdf">
+    <!--
+      Redirect directly to the PDF so iPhone Safari opens it in the native full-screen viewer.
+      Use a root-relative path so this works for BOTH:
+        - /nafie-visar
+        - /nafie-visar/
+    -->
+    <meta http-equiv="refresh" content="0;url=/nafie-visar/invitation.pdf">
     <title>Nafie &amp; Visar • Ftesa</title>
   </head>
   <body>
     <script>
-      window.location.replace('./invitation.pdf');
+      window.location.replace('/nafie-visar/invitation.pdf');
     </script>
   </body>
 </html>

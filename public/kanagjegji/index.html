@@ -2,12 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0;url=./invitation-kanagjegji.pdf">
+    <!--
+      Redirect directly to the PDF so iPhone Safari opens it in the native full-screen viewer.
+      Use a root-relative path so this works for BOTH:
+        - /kanagjegji
+        - /kanagjegji/
+    -->
+    <meta http-equiv="refresh" content="0;url=/kanagjegji/invitation-kanagjegji.pdf">
     <title>Kanagjegji • Ftesa</title>
   </head>
   <body>
     <script>
-      window.location.replace('./invitation-kanagjegji.pdf');
+      window.location.replace('/kanagjegji/invitation-kanagjegji.pdf');
     </script>
   </body>
 </html>
