@@ -14,27 +14,222 @@
     <meta property="og:type" content="website" />
 
     <title>Nafie &amp; Visar • Ftesa</title>
-    <link rel="stylesheet" href="../styles.css" />
+    <!--
+      Hybrid rendering strategy (mobile-first):
+      - Mobile/tablet: render `invitation.png` for perfect scaling and full-width behavior.
+      - Desktop: optionally render `invitation.pdf` inline via <iframe> for easy viewing/printing.
+      - Links inside PDFs can be unreliable on iOS Safari when embedded; so we provide explicit
+        action buttons below that work consistently on all devices (Maps / WhatsApp / PDF).
+    -->
+    <style>
+      :root {
+        --bg: #f4f5f7;
+        --card-bg: #ffffff;
+        --text: #111827;
+        --muted: #6b7280;
+        --shadow: 0 10px 30px rgba(17, 24, 39, 0.12);
+        --radius: 14px;
+        --ring: rgba(17, 24, 39, 0.18);
+        --btn: #111827;
+        --btn-text: #ffffff;
+        --btn-hover: #0b1220;
+        --btn-secondary: #ffffff;
+        --btn-secondary-text: #111827;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 1.45;
+      }
+
+      /* Page layout: mobile-first, centered column. */
+      .page {
+        min-height: 100%;
+        padding: 18px 14px 28px;
+        display: grid;
+        place-items: start center;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: 420px; /* Requirement: ~420px max width on mobile */
+      }
+
+      /* Invitation "card" (works for both img and iframe). */
+      .card {
+        width: 100%;
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden; /* keeps rounded corners for image/iframe */
+        outline: 1px solid rgba(17, 24, 39, 0.06);
+      }
+
+      /* Mobile: PNG is the primary renderer. */
+      .inviteImage {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      /* Desktop-only PDF renderer (hidden by default). */
+      .invitePdfShell {
+        display: none;
+      }
+
+      .invitePdf {
+        width: 100%;
+        border: 0;
+        display: block;
+        /* A comfortable inline reading height on desktop; scroll inside if needed. */
+        height: min(80vh, 980px);
+        min-height: 720px;
+        background: #fff;
+      }
+
+      /* Actions (always visible below invitation). */
+      .actions {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .btn {
+        -webkit-tap-highlight-color: transparent;
+        appearance: none;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        padding: 12px 14px;
+        font-weight: 700;
+        font-size: 15px;
+        text-decoration: none;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        user-select: none;
+      }
+
+      .btnPrimary {
+        background: var(--btn);
+        color: var(--btn-text);
+      }
+      .btnPrimary:hover { background: var(--btn-hover); }
+
+      .btnSecondary {
+        background: var(--btn-secondary);
+        color: var(--btn-secondary-text);
+        border-color: rgba(17, 24, 39, 0.14);
+      }
+      .btnSecondary:hover { border-color: rgba(17, 24, 39, 0.28); }
+
+      .btn:focus-visible {
+        outline: 3px solid var(--ring);
+        outline-offset: 2px;
+      }
+
+      .note {
+        margin: 10px 2px 0;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      /* Desktop behavior:
+         - Show PDF inline (optional) and expand layout width to ~900px.
+         - Hide PNG to avoid double content on large screens. */
+      @media (min-width: 900px) {
+        .wrap { max-width: 900px; } /* Requirement: max width ~900px on desktop */
+
+        .inviteImageShell { display: none; }
+        .invitePdfShell { display: block; }
+
+        .actions {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Respect users that prefer reduced motion (future-proofing). */
+      @media (prefers-reduced-motion: reduce) {
+        .btn { scroll-behavior: auto; }
+      }
+    </style>
   </head>
   <body>
     <div class="page">
-      <main class="container container--invite" role="main">
-        <!--
-          Inline PDF rendering:
-          - Using an <iframe> relies on the browser's native PDF viewer, which preserves
-            interactive link annotations embedded in the PDF (Google Maps, WhatsApp, etc.).
-          - The absolute path avoids any trailing-slash base-URL edge cases on static hosting.
-        -->
-        <iframe
-          class="invitePdf"
-          src="/nafie-visar/invitation.pdf"
-          title="Wedding invitation for Nafie and Visar"
-          loading="eager"
-        ></iframe>
+      <main class="wrap" role="main">
+        <!-- Mobile-first invitation renderer (PNG). -->
+        <section class="inviteImageShell card" aria-label="Wedding invitation image">
+          <img
+            class="inviteImage"
+            src="./invitation.png"
+            alt="Wedding invitation for Nafie and Visar"
+            loading="eager"
+            decoding="async"
+          />
+        </section>
 
-        <p class="hint">
-          Scroll inside the invitation to view all pages. If it doesn’t display,
-          <a href="/nafie-visar/invitation.pdf">open the PDF here</a>.
+        <!-- Desktop-only invitation renderer (PDF inline via iframe). -->
+        <section class="invitePdfShell card" aria-label="Wedding invitation PDF">
+          <!--
+            Note:
+            - iOS Safari can be inconsistent with tapping PDF annotation links inside iframes.
+              This is why the action buttons below are the source of truth for Maps/WhatsApp.
+            - We still offer the PDF inline on desktop for convenience.
+          -->
+          <iframe
+            class="invitePdf"
+            src="./invitation.pdf"
+            title="Wedding invitation PDF for Nafie and Visar"
+            loading="eager"
+          ></iframe>
+        </section>
+
+        <!-- Reliable actions (work on iOS, Android, and desktop). -->
+        <nav class="actions" aria-label="Invitation actions">
+          <!-- TODO: Replace placeholders with real URLs. -->
+          <!-- Example Google Maps link: https://maps.app.goo.gl/XXXX or a full https://www.google.com/maps?q=... -->
+          <a
+            class="btn btnPrimary"
+            href="https://maps.google.com/?q=REPLACE_WITH_LOCATION"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Google Maps
+          </a>
+
+          <!-- TODO: Replace with real WhatsApp confirmation link.
+               Example:
+               - https://wa.me/3834XXXXXXX?text=I%27m%20coming%20to%20the%20wedding
+               - or https://api.whatsapp.com/send?phone=...&text=... -->
+          <a
+            class="btn btnSecondary"
+            href="https://wa.me/0000000000?text=REPLACE_WITH_MESSAGE"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Confirm on WhatsApp
+          </a>
+
+          <!-- Always offer a direct PDF link (print/share). -->
+          <a
+            class="btn btnSecondary"
+            href="./invitation.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open PDF
+          </a>
+        </nav>
+
+        <p class="note">
+          Tip: If you’re on iPhone/Safari, use the buttons above for Maps/WhatsApp (more reliable than embedded PDF taps).
         </p>
       </main>
     </div>
